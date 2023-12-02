@@ -63,6 +63,7 @@ def search_users(id=None, name=None, age=None, occupation=None):
 
     return unique_results
 
+#Bonus Challenge
 def sort_search_results(results):
     # Sort the results based on the specified priority
     sorted_results = sorted(results, key=lambda x: (
