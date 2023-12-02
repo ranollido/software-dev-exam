@@ -15,8 +15,11 @@ def search():
         # Call the search_users function
         results = search_users(**query_params)
 
+        # Sort the results based on the specified priority
+        sorted_results = sort_search_results(results)
+
         # Return the results as JSON
-        return jsonify(results), 200
+        return jsonify(sorted_results), 200
     except Exception as e:
         # Handle any exceptions and return an error response
         return jsonify({"error": str(e)}), 500
@@ -59,3 +62,14 @@ def search_users(id=None, name=None, age=None, occupation=None):
     unique_results = [dict(t) for t in {tuple(d.items()) for d in results}]
 
     return unique_results
+
+def sort_search_results(results):
+    # Sort the results based on the specified priority
+    sorted_results = sorted(results, key=lambda x: (
+        x.get('id', ''),
+        x.get('name', ''),
+        abs(x.get('age', 0)),
+        x.get('occupation', '')
+    ), reverse=False)
+
+    return sorted_results
